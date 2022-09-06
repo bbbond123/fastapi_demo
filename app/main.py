@@ -1,9 +1,15 @@
 from typing import Union
 
 from fastapi import FastAPI
-
+from fastapi.params import Body
+from pydantic import BaseModel
 
 app = FastAPI()
+
+
+class Post(BaseModel):
+    title: str
+    content: str
 
 
 @app.get("/")
@@ -26,3 +32,8 @@ async def read_user_me():
 @app.get("/users/{user_id}")
 async def read_user(user_id: str):
     return {"user_id": user_id}
+
+
+@app.post("/createposts")
+def create_posts(new_post: Post):
+    return {"data": "new post"}
